@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+
+{% block title %} Ajout projet {% endblock %}
+ 
+ 
+ 
+{% block content %}
+                 
+ 
+<h3 class="modal-title" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+text-align: center;">Add Projets</h3>
+         
+        <div class="modal-body">
+ 
+            <form action="{{url_for('auth.addprojet')}}" method="POST">
+ 
+ 
+               
+                <div class="form-group">
+                  <label>Titre Projet:</label>
+                  <input type="text" class="form-control" name="Titre" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Description Projet:</label>
+                  <input type="text" class="form-control" name="description" required="1">
+               </div>
+               <div class="form-group">
+                  <label>Date de debut:</label>
+                  <input type="date" class="form-control" name="datedebut" required="1">
+               </div>
+               <div class="form-group">
+               <label>Date de fin:</label>
+                  <input type="date" class="form-control" name="datefin" required="1">
+               </div>
+               
+               <div class="form-group">
+ 
+ 
+                  <button class="btn btn-primary" type="submit">Add Projet</button>
+ 
+ 
+               </div>
+ 
+ 
+            </form>
+ 
+ 
+        </div>
+    </div>
+ 
+ 
+{% endblock %}

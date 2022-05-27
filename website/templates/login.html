@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %}
+{% block content %}
+<form method="POST">
+    <h3 style="text-align: center;
+    text-decoration: underline;">Login</h3>
+    <div class="form-group">
+        <label for="email"
+        style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Email Address</label>
+        <input
+        style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter email"
+                autofocus
+                required
+        />
+    </div>
+    <div class="form-group">
+        <label for="password"
+        style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Password</label>
+        <input
+        style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Enter password"
+                required
+        />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" style="background-color: green;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Login</button>
+</form>
+{% endblock %}

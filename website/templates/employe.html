@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %} Ajout employe {% endblock %}
+ 
+ 
+ 
+{% block content %}
+                  <!-- Modal Add Employee-->
+ 
+<h3 class="modal-title" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+text-align: center;">Add Employee</h3>
+         
+        <div class="modal-body">
+ 
+            <form action="{{url_for('auth.signup')}}" method="POST">
+ 
+ 
+               <div class="form-group">
+                  <label>Nom:</label>
+                  <input type="text" class="form-control" name="nom" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Prenom:</label>
+                  <input type="tect" class="form-control" name="prenom" required="1">
+               </div>
+                <div class="form-group">
+                  <label>Email:</label>
+                  <input type="email" class="form-control" name="email" required="1">
+               </div>
+               <div class="form-group">
+                  <label>Password:</label>
+                  <input type="text" class="form-control" name="password" required="1">
+               </div>
+               <label>Password Confirm:</label>
+                  <input type="text" class="form-control" name="password_confirm" required="1">
+               </div>
+               <div class="form-group">
+                  <label>ID_Role:</label>
+                  <input type="text" class="form-control" name="id_role" required="1">
+               </div>
+               <div class="form-group">
+                  <label>ID_Responsabilite:</label>
+                  <input type="text" class="form-control" name="id_responsabilite" required="1">
+               </div>
+               <!-- <div class="form-group">
+                  <label>ID_Competence:</label>
+                  <input type="text" class="form-control" name="id_competence" required="1">
+               </div> -->
+               <h4 class="form-group">Competence</h4>
+               {% if competences %}
+                     {% for competence in competences %}
+               <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="id_competence" value="{{ competence.id }}">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    {{ competence.str_competence }}
+                  </label>
+                </div>
+                    {% endfor %}
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                   Aucune competence n'existe dans la base. Veuillez entrer une !!!
+                  </div>
+               {% endif %}
+               <div class="form-group">
+ 
+ 
+                  <button class="btn btn-primary" type="submit">Add Employee</button>
+ 
+ 
+               </div>
+ 
+ 
+            </form>
+ 
+ 
+         </div>
+    </div>
+ 
+ 
+    
+ 
+ 
+{% endblock %}

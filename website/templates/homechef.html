@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}chef list{% endblock %}
+{% block content %}
+    <h3>hello from chef projet page</h3>
+    <div class="list-group ">
+        <a href="{{ url_for('views.visualiser') }}" class="list-group-item list-group-item-action " aria-current="true">
+            Add Employee
+        </a>
+        <a href=" {{ url_for('views.index') }} " class="list-group-item list-group-item-action ">Afficher les employee</a>
+        <a href=" {{ url_for('auth.addprojet') }} " class="list-group-item list-group-item-action">Ajouter projet</a>
+        <a href=" {{ url_for('views.afficherprojet') }}" class="list-group-item list-group-item-action">Afficher Projets</a>
+      </div>
+{% endblock %}

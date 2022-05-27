@@ -1,0 +1,81 @@
+{% extends "base.html" %} {% block title %}Taches {% endblock %}
+{% block content %}
+
+<h3 style="text-align: center;"> Taches list</h3>
+<table class="table table-success table-striped">
+    <tr>
+        <th>ID taches</th>
+        <th> Titre </th>
+        <th> Description </th>
+        <th> est_fini</th>
+        <th>identifiant employe</th>
+        <th> identifiant action</th>
+        <th>Fonction</th>
+        <th></th>
+    </tr>
+    {% for i in taches %}
+    <tr>
+        <td>{{ i['id'] }}</td>
+        <td> {{ i['titre'] }}</td>
+        <td> {{ i['description'] }}</td>
+        <td> {{ i['est_fini'] }}</td>
+        <td> {{ i['id_employe'] }}</td>
+        <td> {{ i['id_action'] }}</td>
+        <td>
+            <a href="{{ url_for('views.taches',id=i['id']) }}" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modaledittache{{ i['id']}}" >Edite tache</a>
+        </td>
+        <td>
+            <a href="{{ url_for('auth.deletetache',id=i['id']) }}" class="btn btn-danger btn-xs" onclick="confirm('Are You Sure To Delete ?')">Delete</a>
+        </td>
+    </tr>
+<div id="modaledittache{{ i['id'] }}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          
+            <div class="modal-content">
+          
+                <div class="modal-header">
+    
+                 <h4 class="modal-title">Changer Informations</h4>
+    
+                </div>
+                <div class="modal-body">
+                    
+                    <form  method="POST" action="{{ url_for('auth.editertache') }}" >
+                        <div class="form-group">
+                            <label for="titre">Titre</label><br>
+                            <input type="hidden"  name="iden" value="{{ i['id'] }}">
+                            <input type="text" name="titrenew" class="form-control" value="{{ i['titre'] }}" placeholder="le nouveau titre" autofocus required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Description</label><br>
+                            <input type="text"  class="form-control" name="description" value="{{ i['description'] }}" placeholder="la nouvelle description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_emp">ID Employee</label><br>
+                            <input type="text"  class="form-control" name="idemploye" value="{{ i['id_employe'] }}" placeholder="identifiant d'employee" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fini">Choix</label><br>
+                            {% if i['est_fini'] %}
+                            fini :<input type="radio" name="rad" checked value="1" id="rad" required> <br>
+                            Non fini :<input type="radio" name="rad" value="0" id="rad" required>
+                            {% else %}
+                            fini :<input type="radio" name="rad" value="1" id="rad" required> <br>
+                            Non fini :<input type="radio" name="rad" checked value="0" id="rad" required>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">Update</button>
+                         </div>
+                    </form>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</table>
+
+
+{% endblock %}

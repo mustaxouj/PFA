@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block title %}Afficher projet{% endblock %}
+{% block content %}
+
+    <h3 style="text-align: center;">Liste Projet</h3>
+<div class="row">
+{% for emp in projets %}
+
+    
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ emp['titre'] }}</h5>
+          <p class="card-text">{{ emp['description'] }}</p>
+            <a href="/affichage/{{ emp['id'] }}" class="btn btn-success btn-xs">Affichage</a>
+            <a href="/delete2/{{ emp['id'] }}" class="btn btn-danger btn-xs" onclick="confirm('Are You Sure To Delete ?')">Delete</a>
+            <a href="/ajoutaction" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modaleadd{{ emp['id']}}">Ajouter action</a>
+        </div>
+      </div>
+    </div>
+  
+<div id="modaleadd{{ emp['id'] }}" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        
+          <div class="modal-content">
+        
+              <div class="modal-header">
+  
+               <h4 class="modal-title">Ajouter action</h4>
+  
+              </div>
+              <div class="modal-body">
+                  
+                  <form  action="{{ url_for('auth.ajoutaction') }} " method="POST" >
+                      <input type="hidden" value="{{ emp.id }}" name="id">
+                      <div class="form-group">
+                          <label for="Titre">Titre</label><br>
+                          <input type="text" name="titre" class="form-control" placeholder="donner le titre" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="dascription">Description</label><br>
+                          <input type="text"  name="description" class="form-control" placeholder="Description" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="nom">Est fini</label><br>
+                          <input type="radio" name="rad" value="1" id="rad" required>Fini <br>
+                          <input type="radio" name="rad" value="0" id="rad" required>Non Fini
+                      </div>
+                      <div class="form-group">
+                          <button class="btn btn-primary" type="submit">ADD</button>
+                       </div>
+                  </form>
+  
+              </div>
+          </div>
+      </div>
+  </div>
+
+{% endfor %}
+</div>
+
+
+   
+
+{% endblock %}

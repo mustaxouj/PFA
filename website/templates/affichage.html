@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %} affichage detaille {% endblock %}
+ 
+
+{% block content %}
+
+
+<h3 style="text-align:center; color:black">Information detaille sur le projet </h3>
+<table>
+    <tr>
+        <td><b>Titre:</b></td>
+        <td>{{ project.titre }}</td>
+    </tr>
+    <tr>
+        <td><b>Description :</b></td>
+        <td>{{ project.description }}</td> 
+    </tr>
+    
+    <tr>
+        <td><b>Date debut :</b></td>
+        <td>{{ project.date_debut }}</td> 
+    </tr>
+    <tr>
+        <td><b>date fin :</b></td>
+        <td>{{ project.date_fin }}</td>
+    </tr>
+    <tr>
+        <td>Chef de projet</td>
+        <td>
+            <ul>
+                <b><li>Nom : {{ project.employe.nom }}</li></b>
+                <b><li>Prenom: {{ project.employe.prenom }}</li></b>
+                <b><li>identifiant : {{ project.employe.id }}</li></b>
+                <b><li>email : {{ project.employe.email }}</li></b>
+            </ul>
+        </td>
+    </tr>
+</table>
+
+
+<h4 style="text-align: center;text-align: center; color: black;">Table action </h4>
+<table class="table table-success table-striped">
+    <tr>
+    <th>Identifiant</th>
+    <th>Titre</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th>Avancement</th>
+    </tr>
+
+{% for i in Action %}
+<tr>
+    <td>{{ i.id }}</td>
+    <td>{{ i.titre }}</td>
+    <td>{{ i.description }}</td>
+    <td>
+        <form action="{{ url_for('views.taches',id= i.id) }}" method="POST">
+            <input type="hidden" value="{{ i.id }}" name="id">
+            <input type="submit" class="btn btn-success" value="afficher taches" > 
+        </form>
+    </td>
+    <td>
+        <form action="{{ url_for('auth.deleteaction') }}" method="POST">
+            <input type="hidden" name="id_projet" id="idact" value="{{ project.id }}">
+            <input type="hidden" name="id_action" id="idact" value="{{ i.id }}">
+            <input type="submit" name="submit1" class="btn btn-warning"  value="supprimer" >
+        </form>
+    </td>
+    <td>
+       <a href="/ajouttache" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modaledit{{ i.id }}" >Add tache</a> 
+    </td>
+    <td>
+        <a href="/updateact" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaleditact{{ i.id }}">Edit</a>
+    </td>
+    <td>
+        
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: {{ listd[i.id] }}%;" aria-valuenow="{{ listd[i.id] }}" aria-valuemin="0" aria-valuemax="100">{{ listd[i.id] }}</div>
+          </div>
+        </td>
+</tr>
+
+<div id="modaleditact{{ i.id }}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      
+        <div class="modal-content">
+      
+            <div class="modal-header">
+
+             <h4 class="modal-title">Changer Informations</h4>
+
+            </div>
+            <div class="modal-body">
+                
+                <form  method="POST" action="{{ url_for('auth.updateact') }}" >
+                    <div class="form-group">
+                        <label for="titre">Titre</label><br>
+                        <input type="hidden"  name="iden" value="{{ i['id'] }}">
+                        <input type="text" name="titrenew" class="form-control" value="{{ i['titre'] }}" placeholder="le nouveau titre" autofocus required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Description">Description</label><br>
+                        <input type="text"  class="form-control" name="description" value="{{ i['description'] }}" placeholder="la nouvelle description" required>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Update</button>
+                     </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div id="modaledit{{ i.id }}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      
+        <div class="modal-content">
+      
+            <div class="modal-header">
+
+             <h4 class="modal-title">Ajouter taches</h4>
+
+            </div>
+            <div class="modal-body">
+                
+                <form  action="{{ url_for('auth.ajouttache') }} " method="POST" >
+                    <input type="hidden" value="{{ i.id }}" name="id">
+                    <div class="form-group">
+                        <label for="Titre">Titre</label><br>
+                        <input type="text" name="titre" class="form-control" placeholder="donner le titre" autofocus required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dascription">Description</label><br>
+                        <input type="text"  name="description" class="form-control" placeholder="Description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nom">Est fini</label><br>
+                        <input type="radio" name="rad" value="1" id="rad" required>Fini <br>
+                        <input type="radio" name="rad" value="0" id="rad" required>Non Fini
+                    </div>
+                    <div class="form-group">
+                        <label for="id_emp">identifiant employee</label><br>
+                        <input type="text" class="form-control" name="id_emp" id="id_emp"  required>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">ADD</button>
+                     </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</table>
+
+
+{% endblock %}

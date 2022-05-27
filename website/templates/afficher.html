@@ -1,0 +1,88 @@
+{% extends "base.html" %} {% block title %}afficher employe{% endblock %}
+{% block content %}
+
+    <h3 style="text-align: center;">Liste Employee</h3>
+<table class="table table-success table-striped">
+
+    <tr>
+        <th>id</th>
+        <th>nom</th>
+        <th>prenom</th>
+        <th>email</th>
+        <th>Role</th>
+        <th>Respensabilite</th>
+        <th>Competence</th>
+        <th>Action</th>
+    </tr>
+{% for emp in employee %}
+{% if emp['role'] != "chef de projet" %}
+<tr>
+    <td>{{ emp['id'] }}</td>
+    <td>{{ emp['nom'] }}</td>
+    <td>{{ emp['prenom'] }}</td>
+    <td>{{ emp['email'] }}</td>
+    <td>{{ emp['role'] }}</td>
+    <td>{{ emp['respensabilite'] }}</td>
+    <td>{{ emp['competences'] }}</td>
+    <td>
+        <a href="/update/{{emp.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{emp.id}}">Edit</a>
+        <a href="/delete/{{emp.id}}" class="btn btn-danger btn-xs" onclick="confirm('Are You Sure To Delete ?')">Delete</a>
+    </td>
+</tr>
+
+    <!-- La partie du formulaire de modification de employee !! -->
+<div id="modaledit{{emp.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      
+        <div class="modal-content">
+      
+            <div class="modal-header">
+
+             <h4 class="modal-title">Changer Informations</h4>
+
+            </div>
+            <div class="modal-body">
+                
+                <form  method="POST" action="{{ url_for('auth.update') }}" >
+                    <div class="form-group">
+                        <label for="nom">Nom</label><br>
+                         <input type="hidden"  name="iden" value="{{ emp['id'] }}">
+                        <input type="text" name="nome" class="form-control" value="{{ emp['nom'] }}" placeholder="le nouveau nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prenom</label><br>
+                        <input type="text"  class="form-control" name="prenom" id="prenom" value="{{ emp['prenom'] }}" placeholder="le nouveau prenom">
+                    </div>
+                    <div class="form-group">
+                        <label for="nom">Email</label><br>
+                        <input type="email"  class="form-control" name="email" id="email" value="{{ emp['email'] }}" placeholder="le nouveau email">
+                    </div>
+                    <div class="form-group">
+                        <label for="newpassword">Nouveau password:</label><br>
+                        <input type="text"  class="form-control" name="newpass" id="newpass" placeholder="le nouveau password">
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role-id</label><br>
+                        <input type="text" class="form-control" name="id_role" value="" id="role" >
+                    </div>
+                    <div class="form-group">
+                        <label for="respensabilite">Respensabilite-id</label><br>
+                        <input type="text" class="form-control" name="responsabilite_id" value="{{ emp['id_respensabilite'] }}" id="respensabilite" >
+                    </div>
+                    <div class="form-group">
+                        <label for="competence">Competence-id</label><br>
+                        <input type="text" class="form-control" placeholder="competence-id" name="competence_id">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Update</button>
+                     </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+</table>
+{% endblock %}
